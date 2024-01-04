@@ -13,6 +13,6 @@ defmodule RPT do
 
   """
   def hello do
-    :world
+    Jsonrs.encode(%{hello: "world"})
   end
 end
