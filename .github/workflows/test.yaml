@@ -4,10 +4,8 @@ env:
   NIF_DIRECTORY: "native/rpt"
   SKIP_JSONRS_BUILD: "true"
 
-on:
-  push:
-    tags:
-      - '*'
+on: [push]
+    
 
 defaults:
   run:
