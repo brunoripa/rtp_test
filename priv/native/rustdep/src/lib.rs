@@ -1,8 +1,19 @@
+
+rustler::init!(
+    "Elixir.RPT.Nif",
+    [
+        add
+    ]
+);
+
+#[rustler::nif(schedule = "DirtyCpu")]
 pub fn add(left: usize, right: usize) -> usize {
     left + right
 }
 
+
 #[cfg(test)]
+
 mod tests {
     use super::*;
 
