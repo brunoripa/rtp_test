@@ -56,11 +56,6 @@ jobs:
         nif-version: ${{ matrix.nif }}
         use-cross: ${{ matrix.job.use-cross }}
         project-dir: "native/rpt"
-    
-    - name: Renaming files
-      shell: bash
-      run: |
-        cd priv/native/rustdep && ls ./target/${{ matrix.job.target }}/release
 
     - name: Artifact upload
       uses: actions/upload-artifact@v3
