@@ -50,12 +50,12 @@ jobs:
       id: build-crate
       uses: philss/rustler-precompiled-action@v1.0.1
       with:
-        project-name: rustdep
+        project-name: native/rpt
         project-version: ${{ env.PROJECT_VERSION }}
         target: ${{ matrix.job.target }}
         nif-version: ${{ matrix.nif }}
         use-cross: ${{ matrix.job.use-cross }}
-        project-dir: "priv/native/rustdep"
+        project-dir: "native/rpt"
     
     - name: Renaming files
       shell: bash

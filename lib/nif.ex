@@ -5,7 +5,7 @@ defmodule RPT.Nif do
 
   use RustlerPrecompiled,
     otp_app: :rpt,
-    crate: "rustdep",
+    crate: "rpt",
     # base_url: "https://github.com/brunoripa/rtp_test/releases/download/v#{@nif_version}",
     base_url: "https://storage.googleapis.com/test_rustler/",
     version: "0.1.0"
