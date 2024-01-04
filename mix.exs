@@ -25,8 +25,7 @@ defmodule RPT.MixProject do
   defp deps do
     [
       {:rustler_precompiled, "~>0.7.1", optional: true},
-      {:rustler, "~> 0.30.0"},
-      {:jsonrs, "0.3.3"}
+      {:rustler, "~> 0.30.0"}
     ]
   end
 end
