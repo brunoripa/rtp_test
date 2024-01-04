@@ -1,0 +1,46 @@
+name: SO .lib generation
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: [push]
+jobs:
+  so-lib-generation:
+    name: SO lib generation for ${{ matrix.platform.target }}
+    permissions:
+      contents: write
+      packages: write
+    strategy:
+      matrix: 
+        platform:
+          - os_name: Ubuntu
+            os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            cross: false
+            cargo_command: cross
+
+    runs-on: ${{ matrix.platform.os }}
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Install toolchain if not cross-compiling
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.platform.target }}
+        if: ${{ !matrix.platform.cross }}
+      - name: Install `cross`
+        run: cargo install cross --git https://github.com/cross-rs/cross
+      - name: Build binary (*nix)
+        shell: bash
+        run: |
+          ${{ matrix.platform.cargo_command }}  build --no-default-features --target ${{ matrix.platform.target }} --lib -r
+        if: ${{ !contains(matrix.platform.os, 'windows') }}
+      - name: Binary stripping step
+        shell: bash
+        run: |
+          strip target/${{ matrix.platform.target }}/release/librustdep.so         
+        if: ${{ !(matrix.platform.cross || matrix.platform.target == 'aarch64-pc-windows-msvc') }}
+      - name: Resulting build
+        run: file ./target/${{ matrix.platform.target }}/release/librustdep.so | tr ',' '\n'
+      - name: Publish GitHub release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          files: ./target/${{ matrix.platform.target }}/release/librustdep.so
